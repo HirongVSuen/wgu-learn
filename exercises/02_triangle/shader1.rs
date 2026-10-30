@@ -27,5 +27,13 @@ const SHADER: &str = r#"
 
 fn main() {
     // TODO: 把上面的 WGSL 编译为 ShaderModule 验证语法。
-    todo!("编写 WGSL 并验证");
+    // 实现完成后运行 `cargo run --bin shader1`，check() 会打印自查要点。
+    check();
+}
+
+/// 自检：打印验证要点（shader 语法 + 颜色）。
+fn check() {
+    println!("自查清单（shader1）：");
+    println!("  - WGSL 能通过 create_shader_module 编译");
+    println!("  - 修改 fragment 颜色后画面颜色随之改变");
 }

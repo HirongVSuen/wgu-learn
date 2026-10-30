@@ -25,5 +25,14 @@
 
 fn main() {
     // TODO: shadow map → SamplerCompare → bias。
-    todo!("阴影映射");
+    // 实现完成后运行 `cargo run --bin shadow1`，check() 会打印自查要点。
+    check();
+}
+
+/// 自检：打印验证要点（阴影是否出现）。
+fn check() {
+    println!("自查清单（shadow1）：");
+    println!("  - 物体能投射出正确形状的阴影");
+    println!("  - SamplerCompare 深度比较正常");
+    println!("  - 调 bias 后阴影 acne 明显减少");
 }

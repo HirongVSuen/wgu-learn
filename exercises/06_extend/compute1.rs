@@ -25,5 +25,14 @@
 
 fn main() {
     // TODO: ComputePipeline + storage buffer + dispatch。
-    todo!("GPU 计算");
+    // 实现完成后运行 `cargo run --bin compute1`，check() 会打印自查要点。
+    check();
+}
+
+/// 自检：打印验证要点（计算是否在 GPU 上完成）。
+fn check() {
+    println!("自查清单（compute1）：");
+    println!("  - compute shader 正确 dispatch（workgroup 划分合理）");
+    println!("  - 结果写在 storage buffer，且 GPU 上可见");
+    println!("  - 尽量不回读，整条链路留在 GPU");
 }

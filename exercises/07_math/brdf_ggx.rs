@@ -35,8 +35,23 @@ fn ggx_d(normal: Vec3, half_vec: Vec3, roughness: f32) -> f32 {
     todo!("GGX D")
 }
 
-fn main() {
+/// 自检：验证 n == h 时 D = 1/(π · roughness⁴)。
+fn check() {
     let n = Vec3::Y;
-    let h = Vec3::new(0.1, 0.9, 0.0).normalize();
-    let _d = ggx_d(n, h, 0.5);
+    let h = Vec3::Y; // n·h = 1
+    let roughness = 0.5;
+    let got = ggx_d(n, h, roughness);
+    let expected = 1.0 / (PI * roughness.powi(4));
+    let ok = (got - expected).abs() < 1e-3;
+
+    if ok {
+        println!("✅ 通过：GGX D(n,n) = 1/(π·roughness⁴) 正确。");
+    } else {
+        println!("❌ 未通过：得到 {got:.4}，期望 {expected:.4}。");
+        println!("   提示：α=roughness²，n·h=1 时 D = 1/(π·α²)。");
+    }
+}
+
+fn main() {
+    check();
 }

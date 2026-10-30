@@ -29,12 +29,28 @@ fn compute_mvp(model: Mat4, view: Mat4, projection: Mat4) -> Mat4 {
     todo!("projection * view * model")
 }
 
-fn main() {
-    // 示例：单位模型，相机在 +Z 看向原点。
-    // 注意：glam 0.34 的相机函数在 `glam::camera` 模块下。
-    let model = Mat4::IDENTITY;
+/// 自检：对比标准结果，给出通过/未通过反馈。
+fn check() {
+    let model = Mat4::from_rotation_y(0.5);
     let view = glam::camera::rh::view::look_at_mat4(Vec3::new(0.0, 0.0, 3.0), Vec3::ZERO, Vec3::Y);
     let projection =
         glam::camera::rh::proj::opengl::perspective(45f32.to_radians(), 16.0 / 9.0, 0.1, 100.0);
-    let _mvp = compute_mvp(model, view, projection);
+
+    let got = compute_mvp(model, view, projection);
+    let expected = projection * view * model;
+    let ok = got
+        .to_cols_array()
+        .iter()
+        .zip(expected.to_cols_array())
+        .all(|(a, b)| (a - b).abs() < 1e-3);
+
+    if ok {
+        println!("✅ 通过：MVP = projection * view * model。");
+    } else {
+        println!("❌ 未通过。提示：顺序是 projection * view * model（列向量右乘）。");
+    }
+}
+
+fn main() {
+    check();
 }

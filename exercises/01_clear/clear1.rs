@@ -23,5 +23,14 @@
 
 fn main() {
     // TODO: 实现 ApplicationHandler，创建窗口并处理上述事件。
-    todo!("创建 EventLoop 与窗口");
+    // 实现完成后运行 `cargo run --bin clear1`，check() 会打印自查要点。
+    check();
+}
+
+/// 自检：打印验证要点（视觉/行为反馈）。
+fn check() {
+    println!("自查清单（clear1）：");
+    println!("  - 运行后能看到窗口");
+    println!("  - 点击关闭（CloseRequested）程序正常退出");
+    println!("  - 拖拽改变大小（Resized）不崩溃，宽高为 0 时不 configure");
 }

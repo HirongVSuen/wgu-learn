@@ -27,5 +27,14 @@
 
 fn main() {
     // TODO: 创建 ShaderModule → RenderPipeline → draw 三角形。
-    todo!("ShaderModule → RenderPipeline → draw");
+    // 实现完成后运行 `cargo run --bin pipeline1`，check() 会打印自查要点。
+    check();
+}
+
+/// 自检：打印验证要点（三角形是否出现）。
+fn check() {
+    println!("自查清单（pipeline1）：");
+    println!("  - 画面中能看到一个三角形");
+    println!("  - 改 fragment 颜色能生效");
+    println!("  - 不 panic，窗口可正常关闭");
 }

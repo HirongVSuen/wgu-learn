@@ -23,5 +23,14 @@
 
 fn main() {
     // TODO: 配置 BlendState，画半透明物体观察混合。
-    todo!("BlendState 透明混合");
+    // 实现完成后运行 `cargo run --bin blend1`，check() 会打印自查要点。
+    check();
+}
+
+/// 自检：打印验证要点（混合效果）。
+fn check() {
+    println!("自查清单（blend1）：");
+    println!("  - 半透明物体与背景正确混合（alpha 变化可见）");
+    println!("  - 先画不透明、后画透明，顺序正确");
+    println!("  - 能解释 src_alpha + one_minus_src_alpha 公式");
 }

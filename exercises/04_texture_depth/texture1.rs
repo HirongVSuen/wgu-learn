@@ -26,5 +26,14 @@
 
 fn main() {
     // TODO: 创建纹理 → 上传数据 → sampler → shader 采样。
-    todo!("Texture + TextureView + Sampler + sRGB");
+    // 实现完成后运行 `cargo run --bin texture1`，check() 会打印自查要点。
+    check();
+}
+
+/// 自检：打印验证要点（纹理是否正确显示）。
+fn check() {
+    println!("自查清单（texture1）：");
+    println!("  - 物体表面显示纹理，颜色正确（注意 sRGB）");
+    println!("  - 纹理坐标越界时按 sampler 的寻址模式处理");
+    println!("  - 缩放纹理时过滤模式生效（线性/最近）");
 }

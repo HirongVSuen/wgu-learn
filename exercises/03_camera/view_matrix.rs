@@ -37,7 +37,35 @@ fn projection_matrix(fovy_radians: f32, aspect: f32, near: f32, far: f32) -> Mat
     todo!("perspective(fovy, aspect, near, far)")
 }
 
+/// 自检：对比 glam 标准结果，给出通过/未通过反馈。
+fn check() {
+    let eye = Vec3::new(0.0, 0.0, 3.0);
+    let target = Vec3::ZERO;
+    let up = Vec3::Y;
+
+    let v = view_matrix(eye, target, up);
+    let v_ok = v
+        .to_cols_array()
+        .iter()
+        .zip(glam::camera::rh::view::look_at_mat4(eye, target, up).to_cols_array())
+        .all(|(a, b)| (a - b).abs() < 1e-3);
+
+    let (fovy, aspect, near, far) = (45f32.to_radians(), 16.0 / 9.0, 0.1, 100.0);
+    let p = projection_matrix(fovy, aspect, near, far);
+    let p_ok = p
+        .to_cols_array()
+        .iter()
+        .zip(glam::camera::rh::proj::opengl::perspective(fovy, aspect, near, far).to_cols_array())
+        .all(|(a, b)| (a - b).abs() < 1e-3);
+
+    if v_ok && p_ok {
+        println!("✅ 通过：view 与 projection 矩阵计算正确。");
+    } else {
+        println!("❌ 未通过。提示：view 用 glam::camera::rh::view::look_at_mat4，");
+        println!("   projection 用 glam::camera::rh::proj::opengl::perspective。");
+    }
+}
+
 fn main() {
-    let _v = view_matrix(Vec3::new(0.0, 2.0, 5.0), Vec3::ZERO, Vec3::Y);
-    let _p = projection_matrix(45f32.to_radians(), 16.0 / 9.0, 0.1, 100.0);
+    check();
 }

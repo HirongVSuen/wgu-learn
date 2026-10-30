@@ -27,5 +27,14 @@
 
 fn main() {
     // TODO: 组合阶段 1~4，做一个带轨道相机的 3D 查看器。
-    todo!("3D 模型查看器 + 轨道相机");
+    // 实现完成后运行 `cargo run --bin project1`，check() 会打印自查要点。
+    check();
+}
+
+/// 自检：打印验证要点（交互 + 稳定性）。
+fn check() {
+    println!("自查清单（project1）：");
+    println!("  - 鼠标拖动旋转/缩放（轨道相机）正常");
+    println!("  - 修改 FOV、物体位置等参数能生效");
+    println!("  - 反复操作与 resize 不崩溃");
 }

@@ -24,5 +24,13 @@
 
 fn main() {
     // TODO: 运行 `cargo run`；再对照 wgpu 30 的 request_device 签名。
-    println!("阶段 0：跑通空项目");
+    check();
+}
+
+/// 自检：打印核对要点（阶段 0）。
+fn check() {
+    println!("自查清单（阶段 0）：");
+    println!("  - 空项目 `cargo run` 跑通");
+    println!("  - 确认 winit 0.30 使用 ApplicationHandler");
+    println!("  - 确认 wgpu 30 request_device 参数与锁定版本一致");
 }

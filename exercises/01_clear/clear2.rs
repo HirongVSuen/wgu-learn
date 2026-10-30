@@ -27,5 +27,14 @@
 
 fn main() {
     // TODO: 完成 wgpu 初始化并 configure surface。
-    todo!("Instance → Adapter → Device/Queue → Surface");
+    // 实现完成后运行 `cargo run --bin clear2`，check() 会打印自查要点。
+    check();
+}
+
+/// 自检：打印验证要点（初始化成功后应有日志输出）。
+fn check() {
+    println!("自查清单（clear2）：");
+    println!("  - 初始化不 panic，能拿到 Device + Queue");
+    println!("  - Surface 成功 configure（含 color_space）");
+    println!("  - 后续能打印 adapter 名称与 backend");
 }

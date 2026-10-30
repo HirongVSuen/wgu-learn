@@ -28,8 +28,21 @@ fn fresnel_schlick(cos_theta: f32, f0: Vec3) -> Vec3 {
     todo!("Schlick Fresnel")
 }
 
-fn main() {
-    // 绝缘体基础反射率约 0.04。
+/// 自检：验证端点 F(1)=F0、F(0)=1。
+fn check() {
     let f0 = Vec3::splat(0.04);
-    let _f = fresnel_schlick(0.6, f0);
+    let at_normal = fresnel_schlick(1.0, f0);
+    let at_grazing = fresnel_schlick(0.0, f0);
+    let ok = (at_normal - f0).length() < 1e-4 && (at_grazing - Vec3::ONE).length() < 1e-4;
+
+    if ok {
+        println!("✅ 通过：F(cosθ=1)=F0，F(cosθ=0)=1。");
+    } else {
+        println!("❌ 未通过：F(1)={at_normal:?}，F(0)={at_grazing:?}。");
+        println!("   提示：F = F0 + (1-F0)·(1-cosθ)^5。");
+    }
+}
+
+fn main() {
+    check();
 }

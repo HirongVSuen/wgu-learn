@@ -28,5 +28,14 @@
 
 fn main() {
     // TODO: 写清屏 pass、提交、present；打印 adapter/backend 日志。
-    todo!("get_current_texture → RenderPass → submit → present");
+    // 实现完成后运行 `cargo run --bin clear3`，check() 会打印自查要点。
+    check();
+}
+
+/// 自检：打印验证要点（清屏颜色 + 日志）。
+fn check() {
+    println!("自查清单（clear3）：");
+    println!("  - 窗口显示你设置的清屏背景色");
+    println!("  - 日志输出 adapter 名称与 backend（RUST_LOG=info）");
+    println!("  - resize 后清屏正常，不崩溃");
 }

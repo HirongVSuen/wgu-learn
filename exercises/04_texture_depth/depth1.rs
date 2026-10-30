@@ -28,5 +28,14 @@
 
 fn main() {
     // TODO: 创建深度纹理 → DepthStencilState → 画多个 3D 物体。
-    todo!("深度纹理 + DepthStencilState + 遮挡");
+    // 实现完成后运行 `cargo run --bin depth1`，check() 会打印自查要点。
+    check();
+}
+
+/// 自检：打印验证要点（遮挡是否正确）。
+fn check() {
+    println!("自查清单（depth1）：");
+    println!("  - 前面的物体正确遮挡后面的物体");
+    println!("  - 深度比较函数（Less）与写入配置正确");
+    println!("  - 把物体放远后能观察到深度冲突（z-fighting）");
 }

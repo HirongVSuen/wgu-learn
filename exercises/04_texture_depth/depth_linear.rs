@@ -27,12 +27,21 @@ fn perspective_depth_ndc(z: f32, near: f32, far: f32) -> f32 {
     todo!("透视投影深度映射")
 }
 
-fn main() {
-    let near = 0.1;
-    let far = 100.0;
-    // 采样几个深度，观察 NDC 值在近处变化快、远处变化慢。
-    for z in [0.11f32, 0.5, 1.0, 10.0, 50.0, 99.0] {
-        let _ndc = perspective_depth_ndc(-z, near, far);
-        // TODO: 打印并观察非线性。
+/// 自检：验证端点映射（directx 约定：near→0，far→1）。
+fn check() {
+    let (near, far) = (0.1, 100.0);
+    let ndc_near = perspective_depth_ndc(-near, near, far);
+    let ndc_far = perspective_depth_ndc(-far, near, far);
+
+    let ok = (ndc_near - 0.0).abs() < 1e-3 && (ndc_far - 1.0).abs() < 1e-3;
+    if ok {
+        println!("✅ 通过：near→0，far→1，深度映射正确。");
+    } else {
+        println!("❌ 未通过：near={ndc_near:.3}，far={ndc_far:.3}。");
+        println!("   提示：directx 约定 near 映射到 0、far 映射到 1。");
     }
+}
+
+fn main() {
+    check();
 }

@@ -23,6 +23,14 @@
 //! 建立可复现的环境基线；理解“锁定版本 + 记录版本”对后续排错的价值。
 
 fn main() {
-    // TODO: 检查 Cargo.toml 依赖版本与 README 是否一致。
-    println!("阶段 0：环境与版本");
+    // TODO: 核对 Cargo.toml 与 README 的版本是否一致。
+    check();
+}
+
+/// 自检：打印核对要点（阶段 0）。
+fn check() {
+    println!("自查清单（阶段 0）：");
+    println!("  - Cargo.toml 已用 `=版本` 锁定 wgpu/winint/glam/pollster/env_logger");
+    println!("  - README 版本表与 Cargo.toml 一致");
+    println!("  - `cargo run` 能编译运行");
 }

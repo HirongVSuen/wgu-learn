@@ -32,7 +32,19 @@ fn sample_ggx_half_vector(xi: Vec2, roughness: f32) -> Vec3 {
     todo!("GGX 重要性采样")
 }
 
+/// 自检：验证采样结果是单位向量。
+fn check() {
+    let h = sample_ggx_half_vector(Vec2::new(0.5, 0.3), 0.4);
+    let ok = (h.length() - 1.0).abs() < 1e-3;
+
+    if ok {
+        println!("✅ 通过：半程向量是单位长度。");
+    } else {
+        println!("❌ 未通过：|h| = {:.4}，应为 1。", h.length());
+        println!("   提示：h = (cosφ·sinθ, sinφ·sinθ, cosθ)。");
+    }
+}
+
 fn main() {
-    let xi = Vec2::new(0.5, 0.3);
-    let _h = sample_ggx_half_vector(xi, 0.4);
+    check();
 }

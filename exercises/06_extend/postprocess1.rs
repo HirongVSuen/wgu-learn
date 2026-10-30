@@ -26,5 +26,14 @@
 
 fn main() {
     // TODO: 离屏纹理 → 全屏 pass → 灰度/模糊。
-    todo!("多 pass 后处理");
+    // 实现完成后运行 `cargo run --bin postprocess1`，check() 会打印自查要点。
+    check();
+}
+
+/// 自检：打印验证要点（后处理是否生效）。
+fn check() {
+    println!("自查清单（postprocess1）：");
+    println!("  - 场景先渲染到离屏纹理，再全屏显示");
+    println!("  - 灰度/模糊效果正确（对应卷积核）");
+    println!("  - LoadOp/StoreOp 设置合理，无多余开销");
 }

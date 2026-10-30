@@ -30,7 +30,21 @@ fn brdf_diffuse(albedo: Vec3) -> Vec3 {
     todo!("albedo / PI")
 }
 
-fn main() {
+/// 自检：验证结果是否为 albedo / π。
+fn check() {
     let albedo = Vec3::new(0.8, 0.2, 0.2);
-    let _f = brdf_diffuse(albedo);
+    let got = brdf_diffuse(albedo);
+    let expected = albedo / PI;
+    let ok = (got - expected).length() < 1e-4;
+
+    if ok {
+        println!("✅ 通过：brdf_diffuse = albedo / π。");
+    } else {
+        println!("❌ 未通过：得到 {got:?}，期望 {expected:?}。");
+        println!("   提示：Lambert = albedo / π。");
+    }
+}
+
+fn main() {
+    check();
 }

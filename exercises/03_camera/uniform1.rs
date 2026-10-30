@@ -25,5 +25,14 @@
 
 fn main() {
     // TODO: 创建 uniform buffer → BindGroup → write_buffer 更新 MVP。
-    todo!("uniform buffer + BindGroup + write_buffer");
+    // 实现完成后运行 `cargo run --bin uniform1`，check() 会打印自查要点。
+    check();
+}
+
+/// 自检：打印验证要点（物体随相机参数变化）。
+fn check() {
+    println!("自查清单（uniform1）：");
+    println!("  - 物体能随 uniform 更新而旋转/移动");
+    println!("  - 改变相机位置或 FOV，画面随之变化");
+    println!("  - uniform 结构体 16 字节对齐，不出现校验错误");
 }
