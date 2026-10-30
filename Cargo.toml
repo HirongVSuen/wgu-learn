@@ -1,0 +1,111 @@
+[package]
+name = "wgpu_learn"
+version = "0.1.0"
+edition = "2024"
+description = "wgpu 学习示例：从窗口/清屏到纹理/深度/相机的小项目"
+default-run = "wgpu_learn"
+
+[dependencies]
+# 核心依赖（锁定版本，与 README 保持一致）
+wgpu = "=30.0.1"
+winit = "=0.30.13"
+glam = "=0.34.1"
+pollster = "=1.0.1"
+env_logger = "=0.11.11"
+
+# 支撑依赖
+log = "0.4"
+bytemuck = { version = "1", features = ["derive"] }
+
+# 每个练习作为独立二进制目标，可用 `cargo run --bin <name>` 运行
+[[bin]]
+name = "setup1"
+path = "exercises/00_setup/setup1.rs"
+
+[[bin]]
+name = "setup2"
+path = "exercises/00_setup/setup2.rs"
+
+[[bin]]
+name = "clear1"
+path = "exercises/01_clear/clear1.rs"
+
+[[bin]]
+name = "clear2"
+path = "exercises/01_clear/clear2.rs"
+
+[[bin]]
+name = "clear3"
+path = "exercises/01_clear/clear3.rs"
+
+[[bin]]
+name = "shader1"
+path = "exercises/02_triangle/shader1.rs"
+
+[[bin]]
+name = "pipeline1"
+path = "exercises/02_triangle/pipeline1.rs"
+
+[[bin]]
+name = "view_matrix"
+path = "exercises/03_camera/view_matrix.rs"
+
+[[bin]]
+name = "mvp"
+path = "exercises/03_camera/mvp.rs"
+
+[[bin]]
+name = "uniform1"
+path = "exercises/03_camera/uniform1.rs"
+
+[[bin]]
+name = "depth_linear"
+path = "exercises/04_texture_depth/depth_linear.rs"
+
+[[bin]]
+name = "texture1"
+path = "exercises/04_texture_depth/texture1.rs"
+
+[[bin]]
+name = "depth1"
+path = "exercises/04_texture_depth/depth1.rs"
+
+[[bin]]
+name = "project1"
+path = "exercises/05_project/project1.rs"
+
+[[bin]]
+name = "postprocess1"
+path = "exercises/06_extend/postprocess1.rs"
+
+[[bin]]
+name = "blend1"
+path = "exercises/06_extend/blend1.rs"
+
+[[bin]]
+name = "shadow1"
+path = "exercises/06_extend/shadow1.rs"
+
+[[bin]]
+name = "compute1"
+path = "exercises/06_extend/compute1.rs"
+
+[[bin]]
+name = "brdf_diffuse"
+path = "exercises/07_math/brdf_diffuse.rs"
+
+[[bin]]
+name = "brdf_ggx"
+path = "exercises/07_math/brdf_ggx.rs"
+
+[[bin]]
+name = "fresnel"
+path = "exercises/07_math/fresnel.rs"
+
+[[bin]]
+name = "importance_sample"
+path = "exercises/07_math/importance_sample.rs"
+
+# 依赖用优化模式编译，降低 wgpu 调试运行时的 shader/校验开销
+[profile.dev.package."*"]
+opt-level = 2

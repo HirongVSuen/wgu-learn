@@ -1,0 +1,162 @@
+# wgpu_learn 练习清单
+#
+# 每个练习对应 README.md / 学习路线图中的一个检查项。
+# id 是 exercises/ 下的相对路径（不含 .rs）。
+
+[project]
+name = "wgpu_learn"
+description = "基于 wgpu 的图形学学习练习，按阶段组织"
+
+[[exercises]]
+id = "00_setup/setup1"
+stage = "阶段0"
+title = "创建项目并锁定依赖"
+tags = ["setup"]
+description = "在 Cargo.toml 锁定 wgpu / winit / glam / pollster / env_logger 版本，并把版本号写入 README。"
+
+[[exercises]]
+id = "00_setup/setup2"
+stage = "阶段0"
+title = "跑通空项目"
+tags = ["setup"]
+description = "cargo run 跑通；确认 winit 0.30 使用 ApplicationHandler、wgpu request_device 参数与锁定版本一致。"
+
+[[exercises]]
+id = "01_clear/clear1"
+stage = "阶段1"
+title = "winit 窗口与事件"
+tags = ["winit"]
+description = "创建窗口，处理 CloseRequested / Resized / RedrawRequested。"
+
+[[exercises]]
+id = "01_clear/clear2"
+stage = "阶段1"
+title = "wgpu 初始化与 Surface"
+tags = ["wgpu"]
+description = "Instance → Adapter → Device/Queue，创建 Surface 与 SurfaceConfiguration。"
+
+[[exercises]]
+id = "01_clear/clear3"
+stage = "阶段1"
+title = "清屏与 present"
+tags = ["wgpu", "debug"]
+description = "get_current_texture → RenderPass → submit → present；打印 adapter/backend；接入 env_logger。"
+
+[[exercises]]
+id = "02_triangle/shader1"
+stage = "阶段2"
+title = "vertex / fragment shader"
+tags = ["shader"]
+description = "编写 WGSL 顶点/片元着色器，改 shader 能改颜色。"
+
+[[exercises]]
+id = "02_triangle/pipeline1"
+stage = "阶段2"
+title = "RenderPipeline 与 draw"
+tags = ["wgpu"]
+description = "创建 ShaderModule 与 RenderPipeline，RenderPass::draw 画三角形。"
+
+[[exercises]]
+id = "03_camera/view_matrix"
+stage = "阶段3"
+title = "view / projection 矩阵"
+tags = ["math"]
+description = "用 glam 实现 look_at 与 perspective（数学 M0）。"
+
+[[exercises]]
+id = "03_camera/mvp"
+stage = "阶段3"
+title = "MVP 组合"
+tags = ["math"]
+description = "用 glam 组合 model / view / projection，能解释每个矩阵的作用。"
+
+[[exercises]]
+id = "03_camera/uniform1"
+stage = "阶段3"
+title = "uniform buffer 与 BindGroup"
+tags = ["wgpu"]
+description = "uniform buffer + BindGroup，queue.write_buffer 更新，加相机控制。"
+
+[[exercises]]
+id = "04_texture_depth/depth_linear"
+stage = "阶段4"
+title = "深度非线性"
+tags = ["math"]
+description = "齐次坐标、NDC、深度非线性、近平面精度（数学 M1）。"
+
+[[exercises]]
+id = "04_texture_depth/texture1"
+stage = "阶段4"
+title = "纹理与采样器"
+tags = ["wgpu"]
+description = "创建 Texture / TextureView / Sampler，上传数据并处理 sRGB，shader 采样。"
+
+[[exercises]]
+id = "04_texture_depth/depth1"
+stage = "阶段4"
+title = "深度纹理与遮挡"
+tags = ["wgpu"]
+description = "深度纹理 + DepthStencilState，画多个 3D 物体验证遮挡。"
+
+[[exercises]]
+id = "05_project/project1"
+stage = "阶段5"
+title = "小项目：3D 查看器"
+tags = ["project"]
+description = "组合前面概念做带轨道相机的 3D 查看器，封装 GPU 资源、可改参数。"
+
+[[exercises]]
+id = "06_extend/postprocess1"
+stage = "阶段6a"
+title = "多 Pass / 后处理"
+tags = ["wgpu", "shader"]
+description = "离屏纹理 + 全屏 pass，理解 LoadOp/StoreOp，实现灰度或模糊。"
+
+[[exercises]]
+id = "06_extend/blend1"
+stage = "阶段6b"
+title = "混合"
+tags = ["wgpu"]
+description = "BlendState 透明混合，理解 Alpha 合成与混合顺序。"
+
+[[exercises]]
+id = "06_extend/shadow1"
+stage = "阶段6c"
+title = "阴影"
+tags = ["wgpu", "math"]
+description = "shadow map + 光照空间矩阵 + SamplerCompare + bias 调参。"
+
+[[exercises]]
+id = "06_extend/compute1"
+stage = "阶段6d"
+title = "Compute"
+tags = ["wgpu"]
+description = "ComputePipeline + storage buffer + dispatch_workgroups，GPU 模拟不回读。"
+
+[[exercises]]
+id = "07_math/brdf_diffuse"
+stage = "阶段7A"
+title = "Lambert 漫反射 BRDF"
+tags = ["math"]
+description = "点积光照、BRDF、能量守恒。"
+
+[[exercises]]
+id = "07_math/brdf_ggx"
+stage = "阶段7A"
+title = "GGX 微表面分布"
+tags = ["math"]
+description = "微表面、Cook-Torrance 的 D 项。"
+
+[[exercises]]
+id = "07_math/fresnel"
+stage = "阶段7A"
+title = "Fresnel"
+tags = ["math"]
+description = "Schlick Fresnel 近似。"
+
+[[exercises]]
+id = "07_math/importance_sample"
+stage = "阶段7A"
+title = "重要性采样"
+tags = ["math"]
+description = "蒙特卡洛积分、概率密度、GGX 重要性采样。"
