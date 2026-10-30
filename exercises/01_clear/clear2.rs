@@ -4,9 +4,12 @@
 //! 前置：clear1
 //! 依赖：wgpu + winit
 //!
-//! 学习思路
-//! 理解 Instance→Adapter→Device/Queue 各自的职责；Surface 依附于窗口；
-//! `SurfaceConfiguration` 决定交换链的格式/尺寸/present 模式。
+//! 步骤
+//! 1. `Instance::new(InstanceDescriptor)`（wgpu 30 按值传参）。
+//! 2. `instance.create_surface(window)` 得到 Surface。
+//! 3. `request_adapter` 选适配器（带 compatible_surface）。
+//! 4. `request_device` 得到 Device + Queue。
+//! 5. 用 `SurfaceConfiguration`（含 color_space）configure surface。
 //!
 //! 资料
 //! - wgpu Instance/Surface 文档: https://docs.rs/wgpu/
@@ -15,6 +18,9 @@
 //! 验收
 //! - Instance → Adapter → Device/Queue
 //! - 创建 Surface 与 SurfaceConfiguration
+//!
+//! 总结
+//! 理清 Instance / Adapter / Device / Queue / Surface 各自的职责与创建顺序。
 //!
 //! 注意：wgpu 30 中 `Instance::new` 按值接收 `InstanceDescriptor`，
 //! `SurfaceConfiguration` 需包含 `color_space` 字段。

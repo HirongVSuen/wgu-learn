@@ -4,9 +4,12 @@
 //! 前置：mvp
 //! 依赖：wgpu + glam
 //!
-//! 学习思路
-//! 把 MVP 放进 uniform buffer，用 BindGroup 绑到 shader；每帧 `write_buffer` 更新。
-//! 注意 uniform 结构体 16 字节对齐，可用 `#[repr(C)]` + bytemuck 派生。
+//! 步骤
+//! 1. 定义 `#[repr(C)]` 的 Uniform 结构体（MVP，注意 16 字节对齐）。
+//! 2. 创建 uniform buffer（UNIFORM + COPY_DST）。
+//! 3. 建 BindGroupLayout + BindGroup，绑定 buffer。
+//! 4. 每帧 `queue.write_buffer` 更新 MVP。
+//! 5. 加键盘/鼠标改相机位置或 FOV。
 //!
 //! 资料
 //! - wgpu BindGroup: https://docs.rs/wgpu/latest/wgpu/struct.BindGroup.html
@@ -16,6 +19,9 @@
 //! - uniform buffer + BindGroup
 //! - queue.write_buffer 更新 uniform
 //! - 加相机控制（位置 / FOV）
+//!
+//! 总结
+//! 掌握 uniform 数据从 CPU 到 GPU 的路径：buffer → bind group → shader。
 
 fn main() {
     // TODO: 创建 uniform buffer → BindGroup → write_buffer 更新 MVP。

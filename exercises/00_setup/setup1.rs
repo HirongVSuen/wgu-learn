@@ -4,18 +4,23 @@
 //! 前置：无（起点）
 //! 依赖：无（纯 Rust，无需编译 wgpu）
 //!
-//! 学习思路
-//! 先整体浏览 README 里阶段 0→7 的路线图，建立“每步学什么”的预期；
-//! 锁定版本是为了可复现，把版本写进 README 是记录环境基线。
+//! 步骤
+//! 1. 阅读 README 路线图，建立阶段 0→7 的整体预期。
+//! 2. 在 Cargo.toml 用 `=版本` 精确锁定 wgpu / winit / glam / pollster / env_logger。
+//! 3. 把这些版本号写进 README 的版本表。
+//! 4. 运行 `cargo run`，确认能编译运行。
 //!
 //! 资料
 //! - Rust 官方学习资源: https://www.rust-lang.org/learn
 //! - Cargo 依赖声明: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html
 //!
 //! 验收
-//! - `Cargo.toml` 锁定 wgpu / winit / glam / pollster / env_logger 版本
+//! - Cargo.toml 锁定版本
 //! - 版本号写入 README
-//! - `cargo run` 能编译运行
+//! - cargo run 能编译运行
+//!
+//! 总结
+//! 建立可复现的环境基线；理解“锁定版本 + 记录版本”对后续排错的价值。
 
 fn main() {
     // TODO: 检查 Cargo.toml 依赖版本与 README 是否一致。

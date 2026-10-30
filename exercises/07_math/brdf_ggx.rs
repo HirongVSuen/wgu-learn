@@ -4,9 +4,11 @@
 //! 前置：brdf_diffuse
 //! 依赖：glam
 //!
-//! 学习思路
-//! 理解微表面理论；GGX / Trowbridge-Reitz 分布 D 描述半程向量 h 的分布，
-//! `α = roughness²`，越粗糙 D 越分散。
+//! 步骤
+//! 1. 理解微表面法线分布 D 的含义。
+//! 2. 令 α = roughness²。
+//! 3. 实现 GGX 公式。
+//! 4. 改变 roughness，观察 D 的集中/分散。
 //!
 //! 资料
 //! - Filament（微表面章节）: https://google.github.io/filament/Filament.html
@@ -14,6 +16,9 @@
 //!
 //! 验收
 //! - 微表面、Cook-Torrance 的 D 项
+//!
+//! 总结
+//! 理解微表面理论与 GGX 分布对高光形状的影响。
 //!
 //! 公式：`D(h) = α² / (π * ((n·h)² * (α² - 1) + 1)²)`，α = roughness²。
 

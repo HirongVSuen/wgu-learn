@@ -4,9 +4,11 @@
 //! 前置：02_triangle（pipeline 基础）
 //! 依赖：wgpu
 //!
-//! 学习思路
-//! 纹理链：Texture → TextureView → Sampler → shader 采样。
-//! 上传用 `queue.write_texture`；颜色纹理用 `*Srgb` 格式保证正确显示。
+//! 步骤
+//! 1. 创建 Texture（`Rgba8UnormSrgb` 或 `*Srgb`），usage 含 TEXTURE_BINDING 与 COPY_DST。
+//! 2. `queue.write_texture` 上传像素。
+//! 3. 创建 Sampler（线性过滤 + repeat）。
+//! 4. shader 里 `textureSample` 采样，输出到片元。
 //!
 //! 资料
 //! - wgpu Texture: https://docs.rs/wgpu/latest/wgpu/struct.Texture.html
@@ -18,6 +20,9 @@
 //! - 创建 Sampler
 //! - 上传纹理数据，处理 sRGB
 //! - shader 采样纹理
+//!
+//! 总结
+//! 掌握纹理上传/采样链路，理解 sRGB 格式对颜色正确性的意义。
 
 fn main() {
     // TODO: 创建纹理 → 上传数据 → sampler → shader 采样。

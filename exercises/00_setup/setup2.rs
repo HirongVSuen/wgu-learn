@@ -4,18 +4,23 @@
 //! 前置：setup1
 //! 依赖：无（纯 Rust）
 //!
-//! 学习思路
-//! 跑通空项目验证工具链；再对照文档确认 winit 0.30 用 `ApplicationHandler`、
-//! wgpu 30 的 `request_device` 参数。遇到编译错误优先读错误提示 + docs.rs。
+//! 步骤
+//! 1. `cargo run` 跑通空项目（默认 bin 打印索引）。
+//! 2. 对照 docs.rs 确认 winit 0.30 的事件模型是 `ApplicationHandler` trait。
+//! 3. 对照 wgpu 30 文档确认 `request_device` 的参数（label / features / limits / memory_hints / trace）。
+//! 4. 记下这两个会随版本变化的关键 API，避免后续踩坑。
 //!
 //! 资料
 //! - wgpu 文档: https://docs.rs/wgpu/
 //! - winit 文档: https://docs.rs/winit/
 //!
 //! 验收
-//! - 空项目 `cargo run` 跑通
-//! - 确认 winit 0.30 使用 `ApplicationHandler`
-//! - 确认 wgpu `request_device` 参数与锁定版本一致
+//! - 空项目 cargo run 跑通
+//! - 确认 winit 0.30 使用 ApplicationHandler
+//! - 确认 wgpu request_device 参数与锁定版本一致
+//!
+//! 总结
+//! 确认工具链可用，并为两个易变 API 建立版本对应关系。
 
 fn main() {
     // TODO: 运行 `cargo run`；再对照 wgpu 30 的 request_device 签名。

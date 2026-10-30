@@ -4,9 +4,11 @@
 //! 前置：无（只需点积基础）
 //! 依赖：glam
 //!
-//! 学习思路
-//! 先理解点积光照 n·l，再理解 BRDF 与能量守恒；
-//! Lambert 漫反射 = albedo / π，半球积分后正好等于 albedo。
+//! 步骤
+//! 1. 回忆点积光照 n·l。
+//! 2. 理解 BRDF 是“出射 / 入射辐射度之比”。
+//! 3. 实现 albedo / π。
+//! 4. 验证半球积分 ≈ albedo（能量守恒）。
 //!
 //! 资料
 //! - Filament PBR 指南: https://google.github.io/filament/Filament.html
@@ -14,6 +16,9 @@
 //!
 //! 验收
 //! - 点积光照、BRDF、能量守恒
+//!
+//! 总结
+//! 理解漫反射 BRDF 与能量守恒：除以 π 使半球积分等于 albedo。
 
 use glam::Vec3;
 

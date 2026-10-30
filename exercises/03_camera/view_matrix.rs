@@ -4,9 +4,11 @@
 //! 前置：02_triangle（先有“坐标空间”的直觉）
 //! 依赖：glam
 //!
-//! 学习思路
-//! view 把世界空间转到相机空间，projection 转到裁剪空间。用 glam 的
-//! `camera` 模块实现，不手推矩阵；重点是会用、能解释。
+//! 步骤
+//! 1. 用 `glam::camera::rh::view::look_at_mat4(eye, target, up)` 求 view。
+//! 2. 用 `glam::camera::rh::proj::opengl::perspective(fov, aspect, near, far)` 求 projection。
+//! 3. 确认 wgpu 用 directx 变体（深度 [0,1]）。
+//! 4. 打印矩阵或用已知点验证变换结果。
 //!
 //! 资料
 //! - glam 文档: https://docs.rs/glam/
@@ -16,6 +18,9 @@
 //! 验收
 //! - 用 glam 实现 look_at 与 perspective
 //! - 不手推矩阵
+//!
+//! 总结
+//! 会用 glam 求 view/projection，理解两者的作用与 wgpu 的 NDC 约定。
 
 use glam::{Mat4, Vec3};
 

@@ -4,9 +4,11 @@
 //! 前置：01_clear
 //! 依赖：wgpu（WGSL，无 CPU 侧额外依赖）
 //!
-//! 学习思路
-//! WGSL 用 `@vertex`/`@fragment` 标注入口，`@builtin(position)` 输出裁剪坐标。
-//! 先改片元颜色验证 shader 能编译，再谈顶点属性。
+//! 步骤
+//! 1. 写 WGSL：`@vertex` 返回 `@builtin(position)`，`@fragment` 返回颜色。
+//! 2. 先用硬编码三角形顶点（在 vertex 里直接返回坐标）。
+//! 3. 用 `device.create_shader_module` 编译，看是否有语法错误。
+//! 4. 改 fragment 颜色，验证修改能生效。
 //!
 //! 资料
 //! - WGSL 规范: https://www.w3.org/TR/WGSL/
@@ -15,6 +17,9 @@
 //! 验收
 //! - 编写 vertex/fragment shader
 //! - 改 shader 能改颜色
+//!
+//! 总结
+//! 会用 WGSL 写最小 vertex/fragment，理解 `@builtin(position)` 输出裁剪坐标。
 
 const SHADER: &str = r#"
 // TODO: 在这里写 WGSL

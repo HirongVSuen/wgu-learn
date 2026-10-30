@@ -4,9 +4,11 @@
 //! 前置：view_matrix
 //! 依赖：glam
 //!
-//! 学习思路
-//! 列向量右乘，顺序是 `projection * view * model`；
-//! 每个矩阵作用：model 摆物体、view 摆相机、projection 到裁剪空间。
+//! 步骤
+//! 1. 定义 model（旋转/缩放）。
+//! 2. 求 view、projection。
+//! 3. 按 `projection * view * model` 顺序相乘。
+//! 4. 用 MVP 变换一个顶点，观察它落到裁剪空间。
 //!
 //! 资料
 //! - LearnOpenGL（坐标系统）: https://learnopengl.com/Getting-started/Coordinate-Systems
@@ -15,6 +17,9 @@
 //! 验收
 //! - 用 glam 组合 model / view / projection
 //! - 能口头解释每个矩阵的作用
+//!
+//! 总结
+//! 牢记列向量右乘顺序 P*V*M，能说出每个矩阵把点从哪个空间转到哪个空间。
 
 use glam::{Mat4, Vec3};
 

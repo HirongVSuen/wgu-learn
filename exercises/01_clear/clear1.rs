@@ -4,9 +4,11 @@
 //! 前置：00_setup
 //! 依赖：winit
 //!
-//! 学习思路
-//! 先理解事件循环与 `ApplicationHandler`（`resumed` 建窗口、`window_event` 处理事件）。
-//! 重点：`Resized` 宽高为 0 时不 configure，这是常见崩溃点。
+//! 步骤
+//! 1. `EventLoop::new()` 创建事件循环，`set_control_flow`。
+//! 2. 实现 `ApplicationHandler`：在 `resumed` 里 `create_window`。
+//! 3. 在 `window_event` 处理 `CloseRequested`（exit）、`Resized`（宽高 0 跳过）、`RedrawRequested`。
+//! 4. 用 `run_app` 启动循环。
 //!
 //! 资料
 //! - winit 文档: https://docs.rs/winit/
@@ -15,6 +17,9 @@
 //! 验收
 //! - 创建窗口
 //! - 处理 CloseRequested / Resized / RedrawRequested
+//!
+//! 总结
+//! 理解事件驱动模型：`resumed` 建窗口、`window_event` 处理事件；resize 为 0 不 configure 是关键防御。
 
 fn main() {
     // TODO: 实现 ApplicationHandler，创建窗口并处理上述事件。

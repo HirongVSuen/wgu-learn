@@ -4,9 +4,11 @@
 //! 前置：05_project + 04 深度
 //! 依赖：wgpu + glam
 //!
-//! 学习思路
-//! 先从光源视角渲染深度生成 shadow map，再在主 pass 里比较采样深度。
-//! 用 `SamplerCompare` 做硬件比较，调 bias 消除阴影瑕疵（acne）。
+//! 步骤
+//! 1. 从光源视角渲染深度到 shadow map（光照空间矩阵）。
+//! 2. 主 pass 里把世界坐标变换到光照空间，采样 shadow map。
+//! 3. 用 `SamplerCompare` 做深度比较。
+//! 4. 调 bias 消除阴影 acne。
 //!
 //! 资料
 //! - LearnOpenGL（Shadow Mapping）: https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
@@ -17,6 +19,9 @@
 //! - 光照空间矩阵
 //! - SamplerCompare
 //! - shadow bias 调参
+//!
+//! 总结
+//! 掌握 shadow mapping 的两趟渲染与深度比较，理解 bias 的来源与作用。
 
 fn main() {
     // TODO: shadow map → SamplerCompare → bias。
