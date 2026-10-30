@@ -1,6 +1,18 @@
 //! 练习 pipeline1：RenderPipeline 与 draw
 //!
-//! 对应阶段 2：
+//! 阶段：2（三角形 + shader）
+//! 前置：shader1
+//! 依赖：wgpu
+//!
+//! 学习思路
+//! 流程：ShaderModule → RenderPipeline → `RenderPass::draw`。
+//! 理解 pipeline 固定管线各阶段（vertex/primitive/multisample/fragment targets）。
+//!
+//! 资料
+//! - wgpu RenderPipeline: https://docs.rs/wgpu/latest/wgpu/struct.RenderPipeline.html
+//! - learn-wgpu（pipeline 章节）: https://sotrh.github.io/learn-wgpu/beginner/tutorial3-pipeline/
+//!
+//! 验收
 //! - 创建 ShaderModule
 //! - 创建 RenderPipeline（先最小可用）
 //! - RenderPass::draw 画三角形

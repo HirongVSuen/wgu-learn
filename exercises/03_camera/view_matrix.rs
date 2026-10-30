@@ -1,9 +1,21 @@
 //! 练习 view_matrix：view / projection 矩阵（数学 M0）
 //!
-//! 对应阶段 3 + 数学 M0：
-//! - 用 glam 实现相机 view 矩阵（look_at）
-//! - 用 glam 实现透视投影（perspective）
-//! - 不用手推矩阵，直接调用 glam。
+//! 阶段：3（Buffer + MVP 相机）
+//! 前置：02_triangle（先有“坐标空间”的直觉）
+//! 依赖：glam
+//!
+//! 学习思路
+//! view 把世界空间转到相机空间，projection 转到裁剪空间。用 glam 的
+//! `camera` 模块实现，不手推矩阵；重点是会用、能解释。
+//!
+//! 资料
+//! - glam 文档: https://docs.rs/glam/
+//! - Scratchapixel（投影矩阵）: https://www.scratchapixel.com/lessons/3d-basic-rendering/perspective-and-orthographic-projection-matrix/
+//! - learn-wgpu（uniforms/相机）: https://sotrh.github.io/learn-wgpu/beginner/tutorial6-uniforms/
+//!
+//! 验收
+//! - 用 glam 实现 look_at 与 perspective
+//! - 不手推矩阵
 
 use glam::{Mat4, Vec3};
 

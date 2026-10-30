@@ -1,9 +1,19 @@
 //! 练习 brdf_diffuse：Lambert 漫反射 BRDF（阶段 7 方向 A）
 //!
-//! 对应阶段 7A：
-//! - 点积光照、BRDF、能量守恒
+//! 阶段：7A（PBR / 光照）
+//! 前置：无（只需点积基础）
+//! 依赖：glam
 //!
-//! Lambert 漫反射 BRDF = albedo / π（能量守恒，半球积分后等于 albedo）。
+//! 学习思路
+//! 先理解点积光照 n·l，再理解 BRDF 与能量守恒；
+//! Lambert 漫反射 = albedo / π，半球积分后正好等于 albedo。
+//!
+//! 资料
+//! - Filament PBR 指南: https://google.github.io/filament/Filament.html
+//! - Physically Based Rendering: https://www.pbr-book.org/
+//!
+//! 验收
+//! - 点积光照、BRDF、能量守恒
 
 use glam::Vec3;
 

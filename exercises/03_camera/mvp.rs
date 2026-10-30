@@ -1,10 +1,20 @@
 //! 练习 mvp：MVP 组合（数学 M0）
 //!
-//! 对应阶段 3 + 数学 M0：
+//! 阶段：3（Buffer + MVP 相机）
+//! 前置：view_matrix
+//! 依赖：glam
+//!
+//! 学习思路
+//! 列向量右乘，顺序是 `projection * view * model`；
+//! 每个矩阵作用：model 摆物体、view 摆相机、projection 到裁剪空间。
+//!
+//! 资料
+//! - LearnOpenGL（坐标系统）: https://learnopengl.com/Getting-started/Coordinate-Systems
+//! - learn-wgpu（uniforms）: https://sotrh.github.io/learn-wgpu/beginner/tutorial6-uniforms/
+//!
+//! 验收
 //! - 用 glam 组合 model / view / projection
 //! - 能口头解释每个矩阵的作用
-//!
-//! 变换顺序：世界空间 --model--> 视图空间 --view--> 相机空间 --projection--> 裁剪空间。
 
 use glam::{Mat4, Vec3};
 
