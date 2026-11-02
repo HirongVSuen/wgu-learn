@@ -20,9 +20,15 @@
 //!
 //! 总结
 //! 理解事件驱动模型：`resumed` 建窗口、`window_event` 处理事件；resize 为 0 不 configure 是关键防御。
+//!
+//!
+
+use wgpu_learn::{SimpleApp, event_loop_run_app};
 
 fn main() {
     // TODO: 实现 ApplicationHandler，创建窗口并处理上述事件。
+    let mut app = SimpleApp::default();
+    event_loop_run_app(&mut app);
     // 实现完成后运行 `cargo run --bin clear1`，check() 会打印自查要点。
     check();
 }

@@ -2377,10 +2377,8 @@ dependencies = [
 name = "wgpu_learn"
 version = "0.1.0"
 dependencies = [
- "bytemuck",
  "env_logger",
  "glam",
- "log",
  "pollster",
  "wgpu",
  "winit",
