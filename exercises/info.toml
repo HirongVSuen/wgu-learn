@@ -160,3 +160,10 @@ stage = "阶段7A"
 title = "重要性采样"
 tags = ["math"]
 description = "蒙特卡洛积分、概率密度、GGX 重要性采样。"
+
+[[exercises]]
+id = "08_input/input1"
+stage = "阶段8"
+title = "统一输入抽象"
+tags = ["input"]
+description = "用 InputAdapter / InputMapper 把平台事件分层映射为纯业务 Action。"

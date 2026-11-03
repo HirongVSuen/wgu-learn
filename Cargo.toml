@@ -106,6 +106,10 @@ path = "exercises/07_math/fresnel.rs"
 name = "importance_sample"
 path = "exercises/07_math/importance_sample.rs"
 
+[[bin]]
+name = "input1"
+path = "exercises/08_input/input1.rs"
+
 # 依赖用优化模式编译，降低 wgpu 调试运行时的 shader/校验开销
 [profile.dev.package."*"]
 opt-level = 2

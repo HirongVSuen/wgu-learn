@@ -38,6 +38,7 @@ cargo run --bin <练习名>
 | 阶段5 | `project1` |
 | 阶段6 | `postprocess1` `blend1` `shadow1` `compute1` |
 | 阶段7 | `brdf_diffuse` `brdf_ggx` `fresnel` `importance_sample` |
+| 阶段8 | `input1` |
 
 > 每个练习是带 TODO 的骨架；未填写的 `todo!()` 运行时会 panic，填完再运行即可。
 
@@ -50,3 +51,4 @@ cargo run --bin <练习名>
 - **阶段 4**：纹理 + 采样器 + sRGB、深度纹理 + `DepthStencilState`、多个 3D 物体遮挡。
 - **阶段 5**：3D 模型查看器 + 轨道相机，组合前面概念、封装 GPU 资源、可改参数。
 - **阶段 6 / 7**：按需扩展（多 Pass / MSAA / 阴影 / Compute / wasm，以及 PBR / 网格 / 光追 / AA 方向），待选方向后补充。
+- **阶段 8**：统一输入抽象（InputAdapter 维护按键状态 → InputMapper 解析组合/时序 → 纯业务 Action）。
