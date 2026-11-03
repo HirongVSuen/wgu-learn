@@ -1,7 +1,12 @@
 use std::sync::Arc;
+use wgpu::naga::compact::KeepUnused::No;
 use winit::{
     application::ApplicationHandler,
-    event::WindowEvent::{CloseRequested, Resized},
+    event::{
+        ElementState, KeyEvent,
+        WindowEvent::{self, CloseRequested, Resized},
+    },
+    keyboard::KeyCode,
     window::{Window, WindowAttributes},
 };
 
@@ -36,6 +41,13 @@ impl ApplicationHandler for AppHandler {
         _window_id: winit::window::WindowId,
         event: winit::event::WindowEvent,
     ) {
+        let renderer = match &mut self.renderer {
+            Some(renderer) => renderer,
+            None => {
+                event_loop.exit();
+                return;
+            }
+        };
         match event {
             CloseRequested => {
                 event_loop.exit();
@@ -47,6 +59,28 @@ impl ApplicationHandler for AppHandler {
                 if let Some(renderer) = self.renderer.as_mut() {
                     renderer.resize(size.width, size.height);
                 }
+            }
+            WindowEvent::KeyboardInput {
+                event:
+                    KeyEvent {
+                        physical_key: winit::keyboard::PhysicalKey::Code(KeyCode::Escape),
+                        state: ElementState::Pressed,
+                        ..
+                    },
+                ..
+            } => {
+                event_loop.exit();
+            }
+            WindowEvent::KeyboardInput {
+                event:
+                    KeyEvent {
+                        physical_key: winit::keyboard::PhysicalKey::Code(code),
+                        state: state,
+                        ..
+                    },
+                ..
+            } => {
+                // renderer.handle_keyboard_input(code, state.is_pressed());
             }
             _ => {}
         }

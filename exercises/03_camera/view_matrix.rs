@@ -30,8 +30,9 @@ fn view_matrix(eye: Vec3, target: Vec3, up: Vec3) -> Mat4 {
     todo!("look_at(eye, target, up)")
 }
 
-/// 透视投影矩阵（等价于 `glam::camera::rh::proj::opengl::perspective`；
-/// wgpu 常用 `directx` 变体，深度范围 [0,1]）。
+/// 透视投影矩阵。本练习用 `opengl` 变体做数学对照（深度 [-1,1]）；
+/// 实际 wgpu 的深度约定是 `directx` 变体（深度 [0,1]），需用
+/// `glam::camera::rh::proj::directx::perspective_*` 才能在 wgpu 中正确使用。
 fn projection_matrix(fovy_radians: f32, aspect: f32, near: f32, far: f32) -> Mat4 {
     // TODO: 用 glam 实现透视投影。
     todo!("perspective(fovy, aspect, near, far)")

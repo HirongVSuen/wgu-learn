@@ -105,4 +105,7 @@ impl Renderer {
             self.is_surface_configured = false;
         }
     }
+
+    // 处理键盘输入事件。
+    pub fn handle_keyboard_input(&mut self, code: String, is_pressed: bool) {}
 }

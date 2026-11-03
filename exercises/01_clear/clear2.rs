@@ -28,7 +28,7 @@
 
 use wgpu_learn::app::runner::run;
 fn main() -> anyhow::Result<()> {
-    // TODO: 完成 wgpu 初始化并 configure surface。
+    // 已实现：wgpu 初始化与 Surface 配置见 src/app/renderer.rs（Renderer）。
     // 实现完成后运行 `cargo run --bin clear2`，check() 会打印自查要点。
     run()?;
     check();

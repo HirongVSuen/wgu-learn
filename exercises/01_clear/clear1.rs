@@ -26,7 +26,7 @@
 use wgpu_learn::app::runner::run;
 
 fn main() -> anyhow::Result<()> {
-    // TODO: 实现 ApplicationHandler，创建窗口并处理上述事件。
+    // 已实现：窗口创建与事件处理见 src/app/handler.rs（AppHandler）。
     run()?;
     // 实现完成后运行 `cargo run --bin clear1`，check() 会打印自查要点。
     check();
