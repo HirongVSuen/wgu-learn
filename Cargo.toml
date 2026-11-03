@@ -12,8 +12,9 @@ winit = "=0.30.13"
 glam = "=0.34.1"
 pollster = "=1.0.1"
 env_logger = "=0.11.11"
+anyhow = "=1"
 # # 支撑依赖
-# log = "0.4"
+log = "0.4"
 # bytemuck = { version = "1", features = ["derive"] }
 
 # 每个练习作为独立二进制目标，可用 `cargo run --bin <name>` 运行

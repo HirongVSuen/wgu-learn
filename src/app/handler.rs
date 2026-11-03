@@ -1,0 +1,54 @@
+use std::sync::Arc;
+use winit::{
+    application::ApplicationHandler,
+    event::WindowEvent::{CloseRequested, Resized},
+    window::{Window, WindowAttributes},
+};
+
+use crate::app::renderer::Renderer;
+
+// wgpu 学习应用的应用处理器
+#[derive(Default)]
+pub struct AppHandler {
+    window: Option<Arc<Window>>,
+    renderer: Option<Renderer>,
+}
+
+// 处理 wgpu 学习应用的窗口事件与应用状态
+impl ApplicationHandler for AppHandler {
+    fn resumed(&mut self, event_loop: &winit::event_loop::ActiveEventLoop) {
+        let window = event_loop
+            .create_window(WindowAttributes::default())
+            .unwrap();
+        self.window = Some(Arc::new(window));
+        let size = self.window.as_ref().unwrap().inner_size();
+        let renderer = Renderer::new(
+            self.window.as_ref().unwrap().clone(),
+            size.width,
+            size.height,
+        );
+        self.renderer = Some(pollster::block_on(renderer));
+    }
+
+    fn window_event(
+        &mut self,
+        event_loop: &winit::event_loop::ActiveEventLoop,
+        _window_id: winit::window::WindowId,
+        event: winit::event::WindowEvent,
+    ) {
+        match event {
+            CloseRequested => {
+                event_loop.exit();
+            }
+            Resized(size) => {
+                if size.width == 0 || size.height == 0 {
+                    return;
+                }
+                if let Some(renderer) = self.renderer.as_mut() {
+                    renderer.resize(size.width, size.height);
+                }
+            }
+            _ => {}
+        }
+    }
+}

@@ -23,14 +23,14 @@
 //!
 //!
 
-use wgpu_learn::{SimpleApp, event_loop_run_app};
+use wgpu_learn::app::runner::run;
 
-fn main() {
+fn main() -> anyhow::Result<()> {
     // TODO: 实现 ApplicationHandler，创建窗口并处理上述事件。
-    let mut app = SimpleApp::default();
-    event_loop_run_app(&mut app);
+    run()?;
     // 实现完成后运行 `cargo run --bin clear1`，check() 会打印自查要点。
     check();
+    Ok(())
 }
 
 /// 自检：打印验证要点（视觉/行为反馈）。

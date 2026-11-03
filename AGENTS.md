@@ -102,6 +102,7 @@ C:\Users\Microsoft\Desktop\valut\wgpu\wgpu\wgpu\01 Projects\exmaple\wgpu_learn �
 - 日志统一用 `env_logger` + `log`（见阶段 1 的 `clear3`），不要引入其他日志方案。
 - 数学库统一用 `glam`（矩阵 / 向量 / 四元数）。
 - 不要为澄清而添加多余注释；注释只解释非显而易见的意图、约束或权衡。
+- 注释一律用**中文**（与仓库现状一致）；文档/注释里保留的专有名词（如 `wgpu`、`winit`）与链接标题不翻译。
 
 ## 提交
 

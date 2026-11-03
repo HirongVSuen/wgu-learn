@@ -24,65 +24,15 @@
 //!
 //! 注意：wgpu 30 中 `Instance::new` 按值接收 `InstanceDescriptor`，
 //! `SurfaceConfiguration` 需包含 `color_space` 字段。
+//!
 
-use wgpu_learn::{SimpleApp, event_loop_run_app, log_init};
-use winit::event_loop::ActiveEventLoop;
-
-// newType方式对SimpleApp做功能覆盖
-struct WgpuSimpleApp {
-    simple_app: Option<SimpleApp>,
-}
-
-impl winit::application::ApplicationHandler for WgpuSimpleApp {
-    fn resumed(&mut self, event_loop: &ActiveEventLoop) {
-        self.simple_app.as_mut().unwrap().resumed(event_loop);
-        let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
-            backends: wgpu::Backends::all(),
-            ..wgpu::InstanceDescriptor::new_without_display_handle()
-        });
-        let surface = instance
-            .create_surface(
-                self.simple_app
-                    .as_ref()
-                    .unwrap()
-                    .simple_window
-                    .as_ref()
-                    .unwrap(),
-            )
-            .unwrap();
-        // let adapter = instance
-        //     .request_adapter(&wgpu::RequestAdapterOptions {
-        //         power_preference: wgpu::PowerPreference::HighPerformance,
-        //         compatible_surface: Some(&surface),
-        //         force_fallback_adapter: false,
-        //         apply_limit_buckets: false,
-        //     })
-        //     .await
-        //     .unwrap();
-    }
-
-    fn window_event(
-        &mut self,
-        event_loop: &ActiveEventLoop,
-        _window_id: winit::window::WindowId,
-        event: winit::event::WindowEvent,
-    ) {
-        self.simple_app
-            .as_mut()
-            .unwrap()
-            .window_event(event_loop, _window_id, event);
-    }
-}
-
-fn main() {
-    log_init();
-    let mut app = WgpuSimpleApp {
-        simple_app: Some(SimpleApp::default()),
-    };
-    event_loop_run_app(&mut app);
+use wgpu_learn::app::runner::run;
+fn main() -> anyhow::Result<()> {
     // TODO: 完成 wgpu 初始化并 configure surface。
     // 实现完成后运行 `cargo run --bin clear2`，check() 会打印自查要点。
+    run()?;
     check();
+    Ok(())
 }
 
 /// 自检：打印验证要点（初始化成功后应有日志输出）。
