@@ -25,10 +25,14 @@
 //! 注意：wgpu 30 中 `VertexState`/`FragmentState` 的 `entry_point` 是
 //! `Option<&str>`，且需提供 `compilation_options`。
 
-fn main() {
-    // TODO: 创建 ShaderModule → RenderPipeline → draw 三角形。
+use wgpu_learn::app::runner::run;
+
+fn main() -> anyhow::Result<()> {
+    // 已创建：ShaderModule 见 src/app/renderer.rs；WGSL 见 src/wgsl/shader.wgsl。
     // 实现完成后运行 `cargo run --bin pipeline1`，check() 会打印自查要点。
+    run()?;
     check();
+    Ok(())
 }
 
 /// 自检：打印验证要点（三角形是否出现）。

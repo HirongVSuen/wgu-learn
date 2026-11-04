@@ -29,7 +29,7 @@
 use wgpu_learn::app::runner::run;
 
 fn main() -> anyhow::Result<()> {
-    // TODO: 写清屏 pass、提交、present；打印 adapter/backend 日志。
+    // 已实现：清屏与 present 见 src/app/renderer.rs（Renderer::render）。
     run()?;
     // 实现完成后运行 `cargo run --bin clear3`，check() 会打印自查要点。
     check();

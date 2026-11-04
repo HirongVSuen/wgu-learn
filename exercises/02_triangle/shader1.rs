@@ -22,11 +22,12 @@
 //! 会用 WGSL 写最小 vertex/fragment，理解 `@builtin(position)` 输出裁剪坐标。
 
 const SHADER: &str = r#"
-// TODO: 在这里写 WGSL
+// WGSL 已由 src/wgsl/shader.wgsl 承载，供 pipeline1 使用。
+// 学习者可在此自行覆写验证语法。
 "#;
 
 fn main() {
-    // TODO: 把上面的 WGSL 编译为 ShaderModule 验证语法。
+    // WGSL 已由 src/wgsl/shader.wgsl 承载，ShaderModule 创建见 src/app/renderer.rs。
     // 实现完成后运行 `cargo run --bin shader1`，check() 会打印自查要点。
     check();
 }

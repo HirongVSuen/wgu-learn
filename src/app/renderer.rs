@@ -1,8 +1,10 @@
 use std::{any, iter::once, sync::Arc};
 
 use wgpu::{
-    Adapter, Backends, Device, DeviceDescriptor, ExperimentalFeatures, Instance,
-    InstanceDescriptor, Queue, RequestAdapterOptions, Surface, SurfaceConfiguration,
+    Adapter, Backends, ColorTargetState, Device, DeviceDescriptor, ExperimentalFeatures,
+    FragmentState, Instance, InstanceDescriptor, MultisampleState, PipelineLayoutDescriptor,
+    PrimitiveState, Queue, RenderPipeline, RenderPipelineDescriptor, RequestAdapterOptions,
+    ShaderModuleDescriptor, Surface, SurfaceConfiguration, VertexState,
     rwh::{HasDisplayHandle, HasWindowHandle},
 };
 
@@ -16,6 +18,7 @@ pub struct Renderer {
     queue: Queue,
     config: SurfaceConfiguration,
     is_surface_configured: bool,
+    render_pipeline: RenderPipeline,
 }
 
 // 用给定的窗口句柄创建一个新的 Renderer 实例。
@@ -88,6 +91,55 @@ impl Renderer {
             adapter.get_info().name,
             adapter.get_info().backend
         );
+
+        let shader = device.create_shader_module(ShaderModuleDescriptor {
+            label: Some("shader"),
+            source: wgpu::ShaderSource::Wgsl(include_str!("../wgsl/shader.wgsl").into()),
+        });
+
+        let pipeline_layout = device.create_pipeline_layout(&PipelineLayoutDescriptor {
+            label: Some("pipe_line layout"),
+            bind_group_layouts: &[],
+            immediate_size: 0,
+        });
+        let render_pipeline = device.create_render_pipeline(&RenderPipelineDescriptor {
+            label: Some("render pipeline"),
+            layout: Some(&pipeline_layout),
+            vertex: VertexState {
+                module: &shader,
+                entry_point: Some("vs_main"),
+                buffers: &[],
+                compilation_options: wgpu::PipelineCompilationOptions::default(),
+            },
+            fragment: Some(FragmentState {
+                module: &shader,
+                entry_point: Some("fs_main"),
+                targets: &[Some(ColorTargetState {
+                    format: config.format,
+                    blend: Some(wgpu::BlendState::REPLACE),
+                    write_mask: wgpu::ColorWrites::ALL,
+                })],
+                compilation_options: wgpu::PipelineCompilationOptions::default(),
+            }),
+            primitive: PrimitiveState {
+                topology: wgpu::PrimitiveTopology::TriangleList,
+                strip_index_format: None,
+                front_face: wgpu::FrontFace::Ccw,
+                cull_mode: Some(wgpu::Face::Back),
+                polygon_mode: wgpu::PolygonMode::Fill,
+                unclipped_depth: false,
+                conservative: false,
+            },
+            depth_stencil: None,
+            cache: None,
+            multiview_mask: None,
+            multisample: MultisampleState {
+                count: 1,
+                mask: !0,
+                alpha_to_coverage_enabled: false,
+            },
+        });
+
         Self {
             instance: instance,
             adapter: adapter,
@@ -96,6 +148,7 @@ impl Renderer {
             queue: queue,
             config: config,
             is_surface_configured: true,
+            render_pipeline: render_pipeline,
         }
     }
 
@@ -150,7 +203,7 @@ impl Renderer {
                 label: Some("Render code"),
             });
         {
-            let _render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
+            let mut render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
                 label: Some("Render pass"),
                 color_attachments: &[Some(wgpu::RenderPassColorAttachment {
                     view: &view,
@@ -171,6 +224,8 @@ impl Renderer {
                 occlusion_query_set: None,
                 multiview_mask: None,
             });
+            render_pass.set_pipeline(&self.render_pipeline);
+            render_pass.draw(0..3, 0..1);
         }
         self.queue.submit(once(encoder.finish()));
         self.queue.present(output);
