@@ -37,14 +37,14 @@ use wgpu_learn::app::runner::run;
 fn main() -> anyhow::Result<()> {
     // 已实现：PipelineManager 见 src/app/pipeline_manager.rs（重构 pipeline1 的创建逻辑）。
     run()?;
-    // 实现完成后运行 `cargo run --bin pipeline_manager`，check() 会打印自查要点。
+    // 实现完成后运行 `cargo run --bin build_pipeline_manager`，check() 会打印自查要点。
     check();
     Ok(())
 }
 
 /// 自检：打印验证要点（缓存复用 + 释放重建）。
 fn check() {
-    println!("自查清单（pipeline_manager）：");
+    println!("自查清单（build_pipeline_manager）：");
     println!("  - 相同 key 第二次 get_or_create 返回缓存的同一个 pipeline");
     println!("  - release 后再次 get_or_create 能重新创建");
     println!("  - renderer 通过 manager 取 pipeline，不再直接持有创建散代码");

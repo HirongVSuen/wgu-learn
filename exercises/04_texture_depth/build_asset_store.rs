@@ -35,14 +35,14 @@ use wgpu_learn::app::runner::run;
 fn main() -> anyhow::Result<()> {
     // 已实现：Assets<T> + Handle<T> 见 src/app/（重构 texture1 的纹理管理）。
     run()?;
-    // 实现完成后运行 `cargo run --bin asset_store`，check() 会打印自查要点。
+    // 实现完成后运行 `cargo run --bin build_asset_store`，check() 会打印自查要点。
     check();
     Ok(())
 }
 
 /// 自检：打印验证要点（资产仓库 + 句柄解耦）。
 fn check() {
-    println!("自查清单（asset_store）：");
+    println!("自查清单（build_asset_store）：");
     println!("  - Assets<T> 能按 handle 存取、查找、释放");
     println!("  - 纹理通过 handle 引用，renderer 不直接持有纹理");
     println!("  - handle 解耦后，可扩展异步加载 / 热重载");

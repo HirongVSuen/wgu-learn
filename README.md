@@ -31,12 +31,12 @@ cargo run --bin <练习名>
 | 阶段 | 练习名 |
 | --- | --- |
 | 阶段0 | `setup1` `setup2` |
-| 阶段1 | `clear1` `clear2` `clear3` |
-| 阶段2 | `shader1` `pipeline1` `pipeline_manager` |
-| 阶段3 | `view_matrix` `mvp` `uniform1` `bind_group_assets` |
-| 阶段4 | `depth_linear` `texture1` `depth1` `asset_store` |
-| 阶段5 | `project1` `ecs_world` |
-| 阶段6 | `postprocess1` `blend1` `shadow1` `compute1` `render_graph` |
+| 阶段1 | `clear1` `clear2` `clear3` `build_render_loop` |
+| 阶段2 | `shader1` `pipeline1` `build_pipeline_manager` |
+| 阶段3 | `view_matrix` `mvp` `uniform1` `build_bind_group` |
+| 阶段4 | `depth_linear` `texture1` `depth1` `build_asset_store` |
+| 阶段5 | `project1` `build_ecs_world` |
+| 阶段6 | `postprocess1` `blend1` `shadow1` `compute1` `build_render_graph` |
 | 阶段7 | `brdf_diffuse` `brdf_ggx` `fresnel` `importance_sample` |
 | 阶段8 | `input1` |
 
@@ -46,13 +46,14 @@ cargo run --bin <练习名>
 
 - **阶段 0**：依赖锁定 + `cargo run` 跑通。
 - **阶段 1**：`winit` 窗口（`CloseRequested` / `Resized` / `RedrawRequested`）、`wgpu` 初始化、Surface 配置、清屏、打印 adapter/backend、接入 `env_logger`。
-- **阶段 2**：vertex/fragment shader、`ShaderModule`、`RenderPipeline`、`draw` 三角形、改 shader 颜色生效；后续 `pipeline_manager` 把管线创建重构为可复用缓存库。
+- **阶段 2**：vertex/fragment shader、`ShaderModule`、`RenderPipeline`、`draw` 三角形、改 shader 颜色生效；后续 `build_pipeline_manager` 把管线创建重构为可复用缓存库。
 - **阶段 3**：vertex/index buffer、uniform buffer + `BindGroup`、`glam` 算 MVP、`queue.write_buffer`、相机控制。
 - **阶段 4**：纹理 + 采样器 + sRGB、深度纹理 + `DepthStencilState`、多个 3D 物体遮挡。
 - **阶段 5**：3D 模型查看器 + 轨道相机，组合前面概念、封装 GPU 资源、可改参数。
 - **阶段 6 / 7**：按需扩展（多 Pass / MSAA / 阴影 / Compute / wasm，以及 PBR / 网格 / 光追 / AA 方向），待选方向后补充。
 
-> 阶段 2~6 每个阶段末尾新增一个「重构练习」（`pipeline_manager` / `bind_group_assets` /
-> `asset_store` / `ecs_world` / `render_graph`）：把刚学会的能力重构为更工程化的形态，
+> 阶段 1~6 每个阶段末尾新增一个「重构练习」（`build_render_loop` /
+> `build_pipeline_manager` / `build_bind_group` / `build_asset_store` /
+> `build_ecs_world` / `build_render_graph`）：把刚学会的能力重构为更工程化的形态，
 > 巩固知识 + 练工程能力（对应「引擎化路线」里的方案一/二/三与阶段 C/D/E）。
 - **阶段 8**：统一输入抽象（InputAdapter 维护按键状态 → InputMapper 解析组合/时序 → 纯业务 Action）。

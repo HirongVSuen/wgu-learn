@@ -36,14 +36,14 @@ use wgpu_learn::app::runner::run;
 fn main() -> anyhow::Result<()> {
     // 已实现：ECS World 见 src/app/（重构 project1 的场景管理）。
     run()?;
-    // 实现完成后运行 `cargo run --bin ecs_world`，check() 会打印自查要点。
+    // 实现完成后运行 `cargo run --bin build_ecs_world`，check() 会打印自查要点。
     check();
     Ok(())
 }
 
 /// 自检：打印验证要点（实体组件 + 渲染任务收集）。
 fn check() {
-    println!("自查清单（ecs_world）：");
+    println!("自查清单（build_ecs_world）：");
     println!("  - World 能 spawn 实体、增删组件、按组件查询");
     println!("  - 每帧从 World 收集渲染任务");
     println!("  - 实体与材质（handle）正确绑定");

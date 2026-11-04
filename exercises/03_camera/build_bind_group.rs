@@ -36,14 +36,14 @@ use wgpu_learn::app::runner::run;
 fn main() -> anyhow::Result<()> {
     // 已实现：BindGroup 资源化见 src/app/（重构 uniform1 的创建逻辑）。
     run()?;
-    // 实现完成后运行 `cargo run --bin bind_group_assets`，check() 会打印自查要点。
+    // 实现完成后运行 `cargo run --bin build_bind_group`，check() 会打印自查要点。
     check();
     Ok(())
 }
 
 /// 自检：打印验证要点（资源封装 + 更新入口）。
 fn check() {
-    println!("自查清单（bind_group_assets）：");
+    println!("自查清单（build_bind_group）：");
     println!("  - uniform buffer 与 bind group 由独立类型持有");
     println!("  - 更新 uniform 有统一封装入口，不裸写 write_buffer");
     println!("  - 结构体 16 字节对齐，无校验错误");

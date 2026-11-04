@@ -36,14 +36,14 @@ use wgpu_learn::app::runner::run;
 fn main() -> anyhow::Result<()> {
     // 已实现：Render Graph 见 src/app/（重构 postprocess/shadow 的多 pass 调度）。
     run()?;
-    // 实现完成后运行 `cargo run --bin render_graph`，check() 会打印自查要点。
+    // 实现完成后运行 `cargo run --bin build_render_graph`，check() 会打印自查要点。
     check();
     Ok(())
 }
 
 /// 自检：打印验证要点（声明式 pass + 自动调度）。
 fn check() {
-    println!("自查清单（render_graph）：");
+    println!("自查清单（build_render_graph）：");
     println!("  - pass 以声明式 node 表示，支持资源依赖");
     println!("  - 拓扑排序自动推导执行顺序");
     println!("  - 离屏渲染目标可复用，无多余开销");

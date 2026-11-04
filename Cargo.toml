@@ -39,6 +39,10 @@ name = "clear3"
 path = "exercises/01_clear/clear3.rs"
 
 [[bin]]
+name = "build_render_loop"
+path = "exercises/01_clear/build_render_loop.rs"
+
+[[bin]]
 name = "shader1"
 path = "exercises/02_triangle/shader1.rs"
 
@@ -47,8 +51,8 @@ name = "pipeline1"
 path = "exercises/02_triangle/pipeline1.rs"
 
 [[bin]]
-name = "pipeline_manager"
-path = "exercises/02_triangle/pipeline_manager.rs"
+name = "build_pipeline_manager"
+path = "exercises/02_triangle/build_pipeline_manager.rs"
 
 [[bin]]
 name = "view_matrix"
@@ -63,8 +67,8 @@ name = "uniform1"
 path = "exercises/03_camera/uniform1.rs"
 
 [[bin]]
-name = "bind_group_assets"
-path = "exercises/03_camera/bind_group_assets.rs"
+name = "build_bind_group"
+path = "exercises/03_camera/build_bind_group.rs"
 
 [[bin]]
 name = "depth_linear"
@@ -79,16 +83,16 @@ name = "depth1"
 path = "exercises/04_texture_depth/depth1.rs"
 
 [[bin]]
-name = "asset_store"
-path = "exercises/04_texture_depth/asset_store.rs"
+name = "build_asset_store"
+path = "exercises/04_texture_depth/build_asset_store.rs"
 
 [[bin]]
 name = "project1"
 path = "exercises/05_project/project1.rs"
 
 [[bin]]
-name = "ecs_world"
-path = "exercises/05_project/ecs_world.rs"
+name = "build_ecs_world"
+path = "exercises/05_project/build_ecs_world.rs"
 
 [[bin]]
 name = "postprocess1"
@@ -107,8 +111,8 @@ name = "compute1"
 path = "exercises/06_extend/compute1.rs"
 
 [[bin]]
-name = "render_graph"
-path = "exercises/06_extend/render_graph.rs"
+name = "build_render_graph"
+path = "exercises/06_extend/build_render_graph.rs"
 
 [[bin]]
 name = "brdf_diffuse"

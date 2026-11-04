@@ -43,6 +43,13 @@ tags = ["wgpu", "debug"]
 description = "get_current_texture → RenderPass → submit → present；打印 adapter/backend；接入 env_logger。"
 
 [[exercises]]
+id = "01_clear/build_render_loop"
+stage = "阶段1"
+title = "渲染循环 + 错误处理（重构）"
+tags = ["wgpu", "engine"]
+description = "把窗口/清屏收敛为稳定的渲染循环，全程 Result 化并处理设备丢失。"
+
+[[exercises]]
 id = "02_triangle/shader1"
 stage = "阶段2"
 title = "vertex / fragment shader"
@@ -57,11 +64,11 @@ tags = ["wgpu"]
 description = "创建 ShaderModule 与 RenderPipeline，RenderPass::draw 画三角形。"
 
 [[exercises]]
-id = "02_triangle/pipeline_manager"
+id = "02_triangle/build_pipeline_manager"
 stage = "阶段2"
 title = "PipelineManager 管线缓存（重构）"
 tags = ["wgpu", "engine"]
-description = "把 pipeline 创建重构为按 key 缓存的 PipelineManager，学「造」而非仅「用」。"
+description = "把 pipeline 创建重构为按 key 缓存的 PipelineManager，学「造」而非仅「用」。""
 
 [[exercises]]
 id = "03_camera/view_matrix"
@@ -85,7 +92,7 @@ tags = ["wgpu"]
 description = "uniform buffer + BindGroup，queue.write_buffer 更新，加相机控制。"
 
 [[exercises]]
-id = "03_camera/bind_group_assets"
+id = "03_camera/build_bind_group"
 stage = "阶段3"
 title = "BindGroup 资源化（重构）"
 tags = ["wgpu", "engine"]
@@ -113,7 +120,7 @@ tags = ["wgpu"]
 description = "深度纹理 + DepthStencilState，画多个 3D 物体验证遮挡。"
 
 [[exercises]]
-id = "04_texture_depth/asset_store"
+id = "04_texture_depth/build_asset_store"
 stage = "阶段4"
 title = "资源管理器 Assets + Handle（重构）"
 tags = ["wgpu", "engine"]
@@ -127,7 +134,7 @@ tags = ["project"]
 description = "组合前面概念做带轨道相机的 3D 查看器，封装 GPU 资源、可改参数。"
 
 [[exercises]]
-id = "05_project/ecs_world"
+id = "05_project/build_ecs_world"
 stage = "阶段5"
 title = "ECS World 实体材质绑定（重构）"
 tags = ["project", "engine"]
@@ -162,7 +169,7 @@ tags = ["wgpu"]
 description = "ComputePipeline + storage buffer + dispatch_workgroups，GPU 模拟不回读。"
 
 [[exercises]]
-id = "06_extend/render_graph"
+id = "06_extend/build_render_graph"
 stage = "阶段6"
 title = "Render Graph 多 Pass（重构）"
 tags = ["wgpu", "engine"]
