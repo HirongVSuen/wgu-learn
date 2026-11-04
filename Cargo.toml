@@ -63,6 +63,10 @@ name = "uniform1"
 path = "exercises/03_camera/uniform1.rs"
 
 [[bin]]
+name = "bind_group_assets"
+path = "exercises/03_camera/bind_group_assets.rs"
+
+[[bin]]
 name = "depth_linear"
 path = "exercises/04_texture_depth/depth_linear.rs"
 
@@ -75,8 +79,16 @@ name = "depth1"
 path = "exercises/04_texture_depth/depth1.rs"
 
 [[bin]]
+name = "asset_store"
+path = "exercises/04_texture_depth/asset_store.rs"
+
+[[bin]]
 name = "project1"
 path = "exercises/05_project/project1.rs"
+
+[[bin]]
+name = "ecs_world"
+path = "exercises/05_project/ecs_world.rs"
 
 [[bin]]
 name = "postprocess1"
@@ -93,6 +105,10 @@ path = "exercises/06_extend/shadow1.rs"
 [[bin]]
 name = "compute1"
 path = "exercises/06_extend/compute1.rs"
+
+[[bin]]
+name = "render_graph"
+path = "exercises/06_extend/render_graph.rs"
 
 [[bin]]
 name = "brdf_diffuse"

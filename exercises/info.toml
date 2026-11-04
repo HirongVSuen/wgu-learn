@@ -85,6 +85,13 @@ tags = ["wgpu"]
 description = "uniform buffer + BindGroup，queue.write_buffer 更新，加相机控制。"
 
 [[exercises]]
+id = "03_camera/bind_group_assets"
+stage = "阶段3"
+title = "BindGroup 资源化（重构）"
+tags = ["wgpu", "engine"]
+description = "把 uniform buffer + BindGroup 封装为独立资源类型，统一更新入口。"
+
+[[exercises]]
 id = "04_texture_depth/depth_linear"
 stage = "阶段4"
 title = "深度非线性"
@@ -106,11 +113,25 @@ tags = ["wgpu"]
 description = "深度纹理 + DepthStencilState，画多个 3D 物体验证遮挡。"
 
 [[exercises]]
+id = "04_texture_depth/asset_store"
+stage = "阶段4"
+title = "资源管理器 Assets + Handle（重构）"
+tags = ["wgpu", "engine"]
+description = "用 Assets<T> 仓库 + Handle<T> 句柄解耦纹理等资源的生产与消费。"
+
+[[exercises]]
 id = "05_project/project1"
 stage = "阶段5"
 title = "小项目：3D 查看器"
 tags = ["project"]
 description = "组合前面概念做带轨道相机的 3D 查看器，封装 GPU 资源、可改参数。"
+
+[[exercises]]
+id = "05_project/ecs_world"
+stage = "阶段5"
+title = "ECS World 实体材质绑定（重构）"
+tags = ["project", "engine"]
+description = "用 World + 组件（变换/材质/网格）管理实体，每帧收集渲染任务。"
 
 [[exercises]]
 id = "06_extend/postprocess1"
@@ -139,6 +160,13 @@ stage = "阶段6d"
 title = "Compute"
 tags = ["wgpu"]
 description = "ComputePipeline + storage buffer + dispatch_workgroups，GPU 模拟不回读。"
+
+[[exercises]]
+id = "06_extend/render_graph"
+stage = "阶段6"
+title = "Render Graph 多 Pass（重构）"
+tags = ["wgpu", "engine"]
+description = "把多 pass 的硬编码流程改为声明式 frame graph，自动调度与资源复用。"
 
 [[exercises]]
 id = "07_math/brdf_diffuse"
