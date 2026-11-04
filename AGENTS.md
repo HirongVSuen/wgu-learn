@@ -70,6 +70,9 @@ C:\Users\Microsoft\Desktop\valut\wgpu\wgpu\wgpu\04 Archives\已完成项目\wgpu
 
 # ——进度笔记（checkbox 勾选全部练习）——
 C:\Users\Microsoft\Desktop\valut\wgpu\wgpu\wgpu\01 Projects\exmaple\wgpu_learn 进度.md
+
+# ——引擎化路线（从练习过渡到迷你引擎的演进计划）——
+C:\Users\Microsoft\Desktop\valut\wgpu\wgpu\wgpu\01 Projects\exmaple\wgpu_learn 引擎化路线.md
 ```
 
 关键注意：

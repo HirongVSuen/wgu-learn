@@ -1,10 +1,10 @@
+use log::error;
 use std::sync::Arc;
-use wgpu::naga::compact::KeepUnused::No;
 use winit::{
     application::ApplicationHandler,
     event::{
         ElementState, KeyEvent,
-        WindowEvent::{self, CloseRequested, Resized},
+        WindowEvent::{self, CloseRequested, RedrawRequested, Resized},
     },
     keyboard::KeyCode,
     window::{Window, WindowAttributes},
@@ -56,8 +56,16 @@ impl ApplicationHandler for AppHandler {
                 if size.width == 0 || size.height == 0 {
                     return;
                 }
-                if let Some(renderer) = self.renderer.as_mut() {
-                    renderer.resize(size.width, size.height);
+                renderer.resize(size.width, size.height);
+            }
+            RedrawRequested => {
+                renderer.update();
+                match renderer.render() {
+                    Ok(_) => {}
+                    Err(e) => {
+                        error!("{e}");
+                        event_loop.exit();
+                    }
                 }
             }
             WindowEvent::KeyboardInput {
@@ -80,9 +88,15 @@ impl ApplicationHandler for AppHandler {
                     },
                 ..
             } => {
-                // renderer.handle_keyboard_input(code, state.is_pressed());
+                renderer.handle_keyboard_input(translate_keycode(code, state));
             }
             _ => {}
         }
+    }
+}
+
+fn translate_keycode(code: KeyCode, state: ElementState) -> crate::core::action::Action {
+    match (code, state) {
+        _ => crate::core::action::Action::None,
     }
 }

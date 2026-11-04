@@ -26,10 +26,14 @@
 //! 注意：wgpu 30 中 `get_current_texture` 返回 `CurrentSurfaceTexture` 枚举，
 //! 用 `Queue::present` 而不是 `frame.present()`。
 
-fn main() {
+use wgpu_learn::app::runner::run;
+
+fn main() -> anyhow::Result<()> {
     // TODO: 写清屏 pass、提交、present；打印 adapter/backend 日志。
+    run()?;
     // 实现完成后运行 `cargo run --bin clear3`，check() 会打印自查要点。
     check();
+    Ok(())
 }
 
 /// 自检：打印验证要点（清屏颜色 + 日志）。

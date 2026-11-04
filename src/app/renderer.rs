@@ -1,10 +1,12 @@
-use std::sync::Arc;
+use std::{any, iter::once, sync::Arc};
 
 use wgpu::{
     Adapter, Backends, Device, DeviceDescriptor, ExperimentalFeatures, Instance,
     InstanceDescriptor, Queue, RequestAdapterOptions, Surface, SurfaceConfiguration,
     rwh::{HasDisplayHandle, HasWindowHandle},
 };
+
+use crate::core::action::Action;
 
 pub struct Renderer {
     instance: Instance,
@@ -102,10 +104,76 @@ impl Renderer {
         if width > 0 && height > 0 {
             self.config.width = width;
             self.config.height = height;
-            self.is_surface_configured = false;
+            self.is_surface_configured = true;
         }
     }
 
     // 处理键盘输入事件。
-    pub fn handle_keyboard_input(&mut self, code: String, is_pressed: bool) {}
+    pub fn handle_keyboard_input(&mut self, action: Action) {
+        match action {
+            Action::None => {}
+        }
+    }
+
+    // 更新渲染状态。
+    pub fn update(&mut self) {}
+
+    // 渲染一帧。
+    pub fn render(&mut self) -> anyhow::Result<()> {
+        if !self.is_surface_configured {
+            return Ok(());
+        }
+        let output = match self.surface.get_current_texture() {
+            wgpu::CurrentSurfaceTexture::Success(surface_texture) => surface_texture,
+            wgpu::CurrentSurfaceTexture::Suboptimal(surface_texture) => surface_texture,
+            wgpu::CurrentSurfaceTexture::Timeout
+            | wgpu::CurrentSurfaceTexture::Occluded
+            | wgpu::CurrentSurfaceTexture::Validation => {
+                return Ok(());
+            }
+            wgpu::CurrentSurfaceTexture::Outdated => {
+                self.surface.configure(&self.device, &self.config);
+                return Ok(());
+            }
+            wgpu::CurrentSurfaceTexture::Lost => {
+                anyhow::bail!("Surface texture lost");
+            }
+        };
+
+        let view = output
+            .texture
+            .create_view(&wgpu::TextureViewDescriptor::default());
+
+        let mut encoder = self
+            .device
+            .create_command_encoder(&wgpu::CommandEncoderDescriptor {
+                label: Some("Render code"),
+            });
+        {
+            let _render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
+                label: Some("Render pass"),
+                color_attachments: &[Some(wgpu::RenderPassColorAttachment {
+                    view: &view,
+                    resolve_target: None,
+                    depth_slice: None,
+                    ops: wgpu::Operations {
+                        load: wgpu::LoadOp::Clear(wgpu::Color {
+                            r: 0.1,
+                            g: 0.2,
+                            b: 0.3,
+                            a: 1.0,
+                        }),
+                        store: wgpu::StoreOp::Store,
+                    },
+                })],
+                depth_stencil_attachment: None,
+                timestamp_writes: None,
+                occlusion_query_set: None,
+                multiview_mask: None,
+            });
+        }
+        self.queue.submit(once(encoder.finish()));
+        self.queue.present(output);
+        Ok(())
+    }
 }
