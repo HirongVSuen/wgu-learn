@@ -47,6 +47,10 @@ name = "pipeline1"
 path = "exercises/02_triangle/pipeline1.rs"
 
 [[bin]]
+name = "pipeline_manager"
+path = "exercises/02_triangle/pipeline_manager.rs"
+
+[[bin]]
 name = "view_matrix"
 path = "exercises/03_camera/view_matrix.rs"
 
