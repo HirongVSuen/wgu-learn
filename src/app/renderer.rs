@@ -1,14 +1,16 @@
-use std::{any, iter::once, sync::Arc};
+use std::{iter::once, sync::Arc};
 
 use wgpu::{
-    Adapter, Backends, ColorTargetState, Device, DeviceDescriptor, ExperimentalFeatures,
-    FragmentState, Instance, InstanceDescriptor, MultisampleState, PipelineLayoutDescriptor,
-    PrimitiveState, Queue, RenderPipeline, RenderPipelineDescriptor, RequestAdapterOptions,
-    ShaderModuleDescriptor, Surface, SurfaceConfiguration, VertexState,
+    Adapter, Backends, Device, DeviceDescriptor, ExperimentalFeatures, Instance,
+    InstanceDescriptor, Queue, RequestAdapterOptions, Surface, SurfaceConfiguration,
     rwh::{HasDisplayHandle, HasWindowHandle},
 };
 
-use crate::core::action::Action;
+use crate::{
+    app::pipeline_manager::PipelineManager,
+    core::action::Action,
+    error::{EngineError, EngineResult},
+};
 
 pub struct Renderer {
     instance: Instance,
@@ -18,7 +20,7 @@ pub struct Renderer {
     queue: Queue,
     config: SurfaceConfiguration,
     is_surface_configured: bool,
-    render_pipeline: RenderPipeline,
+    pipe_line_manager: PipelineManager,
 }
 
 // 用给定的窗口句柄创建一个新的 Renderer 实例。
@@ -28,14 +30,15 @@ impl Renderer {
         window: Arc<W>,
         width: u32,
         height: u32,
-    ) -> Self {
+    ) -> EngineResult<Self> {
         // 创建一个新的 WGPU 实例。
         let instance = Instance::new(InstanceDescriptor {
             backends: Backends::all(),
             ..InstanceDescriptor::new_without_display_handle()
         });
+
         // 创建一个新的 WGPU 画布。
-        let surface = instance.create_surface(window.clone()).unwrap();
+        let surface = instance.create_surface(window.clone())?;
 
         // 请求一个显卡适配器。
         let adapter = instance
@@ -45,8 +48,8 @@ impl Renderer {
                 force_fallback_adapter: false,
                 apply_limit_buckets: true,
             })
-            .await
-            .unwrap();
+            .await?;
+
         // 创建一个新的 WGPU 设备和队列。
         let (device, queue) = adapter
             .request_device(&DeviceDescriptor {
@@ -61,16 +64,18 @@ impl Renderer {
                 memory_hints: wgpu::MemoryHints::default(),
                 trace: wgpu::Trace::Off,
             })
-            .await
-            .unwrap();
+            .await?;
+
         // 获取画布的支持格式。
         let surface_caps = surface.get_capabilities(&adapter);
+
         // 选择一个支持的格式。
         let surface_format = surface_caps
             .formats
             .iter()
             .find(|f| f.is_srgb())
             .unwrap_or(&surface_caps.formats[0]);
+
         // 配置文件
         let config = SurfaceConfiguration {
             usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
@@ -83,6 +88,7 @@ impl Renderer {
             alpha_mode: surface_caps.alpha_modes[0],
             view_formats: vec![],
         };
+
         // 真正配置画布，并打印 adapter 名称与 backend。
         surface.configure(&device, &config);
 
@@ -91,73 +97,26 @@ impl Renderer {
             adapter.get_info().name,
             adapter.get_info().backend
         );
-
-        let shader = device.create_shader_module(ShaderModuleDescriptor {
-            label: Some("shader"),
-            source: wgpu::ShaderSource::Wgsl(include_str!("../wgsl/shader.wgsl").into()),
-        });
-
-        let pipeline_layout = device.create_pipeline_layout(&PipelineLayoutDescriptor {
-            label: Some("pipe_line layout"),
-            bind_group_layouts: &[],
-            immediate_size: 0,
-        });
-        let render_pipeline = device.create_render_pipeline(&RenderPipelineDescriptor {
-            label: Some("render pipeline"),
-            layout: Some(&pipeline_layout),
-            vertex: VertexState {
-                module: &shader,
-                entry_point: Some("vs_main"),
-                buffers: &[],
-                compilation_options: wgpu::PipelineCompilationOptions::default(),
-            },
-            fragment: Some(FragmentState {
-                module: &shader,
-                entry_point: Some("fs_main"),
-                targets: &[Some(ColorTargetState {
-                    format: config.format,
-                    blend: Some(wgpu::BlendState::REPLACE),
-                    write_mask: wgpu::ColorWrites::ALL,
-                })],
-                compilation_options: wgpu::PipelineCompilationOptions::default(),
-            }),
-            primitive: PrimitiveState {
-                topology: wgpu::PrimitiveTopology::TriangleList,
-                strip_index_format: None,
-                front_face: wgpu::FrontFace::Ccw,
-                cull_mode: Some(wgpu::Face::Back),
-                polygon_mode: wgpu::PolygonMode::Fill,
-                unclipped_depth: false,
-                conservative: false,
-            },
-            depth_stencil: None,
-            cache: None,
-            multiview_mask: None,
-            multisample: MultisampleState {
-                count: 1,
-                mask: !0,
-                alpha_to_coverage_enabled: false,
-            },
-        });
-
-        Self {
-            instance: instance,
-            adapter: adapter,
-            surface: surface,
-            device: device,
-            queue: queue,
-            config: config,
+        // 创建管线管理
+        let pipe_line_manager = PipelineManager::new();
+        Ok(Self {
+            instance,
+            adapter,
+            surface,
+            device,
+            queue,
+            config,
             is_surface_configured: true,
-            render_pipeline: render_pipeline,
-        }
+            pipe_line_manager,
+        })
     }
 
-    // 调整窗口大小时调用，更新配置并重置 surface 配置状态。
+    // 调整窗口大小时调用，更新配置并重新配置 surface。
     pub fn resize(&mut self, width: u32, height: u32) {
         if width > 0 && height > 0 {
             self.config.width = width;
             self.config.height = height;
-            self.is_surface_configured = true;
+            self.surface.configure(&self.device, &self.config);
         }
     }
 
@@ -172,7 +131,7 @@ impl Renderer {
     pub fn update(&mut self) {}
 
     // 渲染一帧。
-    pub fn render(&mut self) -> anyhow::Result<()> {
+    pub fn render(&mut self) -> EngineResult<()> {
         if !self.is_surface_configured {
             return Ok(());
         }
@@ -189,7 +148,7 @@ impl Renderer {
                 return Ok(());
             }
             wgpu::CurrentSurfaceTexture::Lost => {
-                anyhow::bail!("Surface texture lost");
+                return Err(EngineError::Other("Surface texture lost".to_string()));
             }
         };
 
@@ -224,7 +183,11 @@ impl Renderer {
                 occlusion_query_set: None,
                 multiview_mask: None,
             });
-            render_pass.set_pipeline(&self.render_pipeline);
+            render_pass.set_pipeline(self.pipe_line_manager.get_or_create(
+                super::pipeline_manager::PipeLineType::Solid,
+                &self.device,
+                &self.config,
+            ));
             render_pass.draw(0..3, 0..1);
         }
         self.queue.submit(once(encoder.finish()));

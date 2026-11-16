@@ -1,3 +1,4 @@
+use anyhow::Context;
 use log::error;
 use std::sync::Arc;
 use winit::{
@@ -12,29 +13,41 @@ use winit::{
 
 use crate::app::renderer::Renderer;
 
-// wgpu 学习应用的应用处理器
+// 应用处理器
 #[derive(Default)]
 pub struct AppHandler {
     window: Option<Arc<Window>>,
     renderer: Option<Renderer>,
 }
 
-// 处理 wgpu 学习应用的窗口事件与应用状态
-impl ApplicationHandler for AppHandler {
-    fn resumed(&mut self, event_loop: &winit::event_loop::ActiveEventLoop) {
-        let window = event_loop
-            .create_window(WindowAttributes::default())
-            .unwrap();
-        self.window = Some(Arc::new(window));
-        let size = self.window.as_ref().unwrap().inner_size();
-        let renderer = Renderer::new(
-            self.window.as_ref().unwrap().clone(),
-            size.width,
-            size.height,
+impl AppHandler {
+    // 尝试初始化应用，创建窗口和渲染器。
+    fn try_init(&mut self, event_loop: &winit::event_loop::ActiveEventLoop) -> anyhow::Result<()> {
+        let window = Arc::new(
+            event_loop
+                .create_window(WindowAttributes::default())
+                .context("创建窗口失败")?,
         );
-        self.renderer = Some(pollster::block_on(renderer));
+        let size = &window.inner_size();
+        let renderer = Renderer::new(window.clone(), size.width, size.height);
+        self.renderer = Some(pollster::block_on(renderer).context("创建渲染器失败")?);
+        self.window = Some(window);
+        Ok(())
+    }
+}
+
+// 应用的窗口事件与应用状态
+impl ApplicationHandler for AppHandler {
+    // 窗口恢复时调用，尝试初始化应用。
+    fn resumed(&mut self, event_loop: &winit::event_loop::ActiveEventLoop) {
+        let init_result = self.try_init(event_loop);
+        if let Err(e) = init_result {
+            log::error!("初始化失败: {}", e);
+            event_loop.exit();
+        }
     }
 
+    // 窗口事件处理，包括关闭和调整大小。
     fn window_event(
         &mut self,
         event_loop: &winit::event_loop::ActiveEventLoop,
@@ -63,7 +76,7 @@ impl ApplicationHandler for AppHandler {
                 match renderer.render() {
                     Ok(_) => {}
                     Err(e) => {
-                        error!("{e}");
+                        error!("渲染失败!{e}");
                         event_loop.exit();
                     }
                 }
@@ -83,7 +96,7 @@ impl ApplicationHandler for AppHandler {
                 event:
                     KeyEvent {
                         physical_key: winit::keyboard::PhysicalKey::Code(code),
-                        state: state,
+                        state,
                         ..
                     },
                 ..

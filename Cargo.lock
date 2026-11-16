@@ -2388,6 +2388,7 @@ dependencies = [
  "glam",
  "log",
  "pollster",
+ "thiserror 2.0.21",
  "wgpu",
  "winit",
 ]
